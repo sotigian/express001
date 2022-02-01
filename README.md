@@ -21,3 +21,11 @@ Intro project for nodeJS packages
 - delete .git folder
 - git init
 - follow the steps that we showed on video in order to publish the repository to github
+
+-- Connect to a db and check the credentials of a user that tries to login
+-- const my sql = require('mysql2');
+-- const configDetails = {};
+-- const connection = mysql.createConnection(configDetails);
+-- connection.connect()
+-- const sql = "SELECT * FROM users WHERE username = ? AND password = ?"
+-- connection.execute(sql, [req.body.username, req.body.password])

@@ -4,12 +4,14 @@
   "description": "Intro project for nodeJS packages",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "pm2 start index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "forever": "^4.0.3",
+    "mysql2": "^2.3.3"
   }
 }
