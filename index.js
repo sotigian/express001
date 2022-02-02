@@ -28,7 +28,7 @@ app.get('/hello', (req, res) => {
 
 // some test /a
 // shall we change it to /login ?
-app.get('/a', (req, res) => {
+app.get('/login', (req, res) => {
     if (connected) {
         res.send(`Hello World από την Πανεπιστημίου 39! - You are already logged in!`);
     } else {
@@ -41,7 +41,7 @@ app.get('/a', (req, res) => {
         <title>Document</title>
     </head>
     <body>
-        <form action="http://localhost:3000/a" method="POST">
+        <form action="http://localhost:3000/login" method="POST">
             Username: <input type="text" name = "username" title="username" /><br/> 
             Password: <input type="password" name = "password" title="password" /><br/>
             <button type="submit">Login</button>
@@ -55,7 +55,7 @@ app.get('/a', (req, res) => {
 
 // some test to accept a value from a form 
 // shall we change it to /login ?
-app.post('/a', async (req, res) => {
+app.post('/login', async (req, res) => {
     let loginResult = await checkLoginDetails(req.body.username, req.body.password);
     if (loginResult) {
         connected = true;
@@ -75,20 +75,26 @@ app.listen(port, () => {
     console.log(`DB app listening on port ${port}`);
 })
 
+// this is the business logic of the login procedure
 async function checkLoginDetails(username, password) {
     try {
         let dbResult = await dbLogin(username, password);
+        // correct credentials
         if (dbResult) {
             return (true);
         }
-    } catch (error) {
+        // wrong credentials
+        // where is the else part???????
+    }
+    
+    catch (error) {
         return (false);
     }
 }
 
 async function dbLogin(username, password) {
     const poolConfigDetails = {
-        connectionLimit: 10,
+        connectionLimit: 1,
         host: 'ra1.anystream.eu',
         port: '5420',
         user: 'cb12ptjs',
@@ -107,7 +113,9 @@ async function dbLogin(username, password) {
                     if (rows.length == 1) {
                         pool.end();
                         return (resolve(true));
-                    } else {
+                    }
+                    // rows.length != 1
+                    else {
                         pool.end();
                         return (resolve(false));
                     }
